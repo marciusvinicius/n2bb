@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+    wine-app:
+        container_name: wine-app
+        build:
+            context: ./application
+        ports:
+            - 8000:80
+        volumes:
+            - ./application:/usr/src/app
+        env_file:
+            - ./application/.env
+        depends_on:
+            - wine-db
+    wine-db:
+        image: postgres:10
+        container_name: winedb
+        environment:
+            POSTGRES_USER: "user"
+            POSTGRES_PASSWORD: "password"
