@@ -13,8 +13,16 @@ services:
         depends_on:
             - wine-db
     wine-db:
-        image: postgres:10
-        container_name: winedb
+        image: mongo:latest
         environment:
-            POSTGRES_USER: "user"
-            POSTGRES_PASSWORD: "password"
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: rootpassword
+          MONGO_INITDB_DATABASE: sommelier
+          MONGODB_DATABASE: sommelier
+        ports:
+          - 27017:27017
+        volumes:
+          - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    
+# volumes:
+#   mongodb_data_container:

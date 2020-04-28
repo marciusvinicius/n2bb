@@ -10,7 +10,9 @@ api = Api(app)
 #TODO: Move for config or env
 #TODO: Use postgresql or mysql
 app.config['MONGODB_SETTINGS'] = {
- 'host': 'mongodb://localhost/wine'
+ 'host': 'mongodb://wine-db:27017/sommelier',
+ 'username': 'root',
+ 'password': 'rootpassword',
 }
 
 initialize_db(app)
