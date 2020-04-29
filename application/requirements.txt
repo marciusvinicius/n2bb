@@ -3,3 +3,8 @@ flask-restful
 flask_mongoengine
 gunicorn
 pytest
+pandas
+numpy
+environ
+mongomock
+
