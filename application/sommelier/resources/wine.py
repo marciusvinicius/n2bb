@@ -4,7 +4,8 @@ from flask_restful import Resource
 from sommelier.databases.models import Wine
 
 
-possible_filters = ["price", "title"]
+#TODO: Better way to filter, maybe using RestFilter
+possible_filters = ["price", "title", "variety"]
 
 class WinesApi(Resource):
     def get(self):
