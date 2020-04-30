@@ -1,16 +1,18 @@
 import json
 from flask import Response, request, jsonify
 from flask_restful import Resource
-from sommelier.databases.models import Wine
+from sommelier.databases.models import Wine, possible_filters
 
-
-#TODO: Better way to filter, maybe using RestFilter
-possible_filters = ["price", "title", "variety"]
 
 class WinesApi(Resource):
+
     def get(self):
         query_params = request.args
-        filters = {k:v for k, v in query_params.items() if k in possible_filters}
+        filters = {
+            k:v for k, v in query_params.items() 
+                if k in possible_filters
+        }
+
         query = Wine.objects.filter(**filters)
         page = query_params.get('page') or 1
         per_page = query_params.get('per_page') or 10
@@ -18,10 +20,11 @@ class WinesApi(Resource):
             page=int(page),
             per_page=int(per_page)
         )
-        previous_page = (wine_pagination.page - 1) or None
+    
+        previous_page = wine_pagination.prev_num if wine_pagination.has_prev else None
         current_page = wine_pagination.page
         total_pages = wine_pagination.pages
-        next_page =  (current_page + 1) if (current_page + 1 <= total_pages) else None
+        next_page =  wine_pagination.next_num if wine_pagination.has_next else None
         count = wine_pagination.total
         list_of_items = wine_pagination.items
 
