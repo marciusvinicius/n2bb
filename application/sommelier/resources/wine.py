@@ -13,7 +13,10 @@ class WinesApi(Resource):
                 if k in possible_filters
         }
 
+        sort = query_params.get("sort").split(",")
         query = Wine.objects.filter(**filters)
+        query = query.order_by(*sort)
+
         page = query_params.get('page') or 1
         per_page = query_params.get('per_page') or 10
         wine_pagination = query.paginate(
