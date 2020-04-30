@@ -18,7 +18,9 @@ possible_filters = [
     "variety",
     "variety__contains",
     "description",
-    "description__contains"
+    "description__contains",
+    "country",
+    "country__contains",
 ]
 
 

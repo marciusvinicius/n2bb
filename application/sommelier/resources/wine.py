@@ -13,7 +13,7 @@ class WinesApi(Resource):
                 if k in possible_filters
         }
 
-        sort = query_params.get("sort").split(",")
+        sort = query_params.get("sort", "").split(",") or "+price"
         query = Wine.objects.filter(**filters)
         query = query.order_by(*sort)
 

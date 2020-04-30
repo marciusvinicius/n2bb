@@ -11,7 +11,6 @@ def csv_to_json(filename, header=None):
     data = pd.read_csv(filename, header=header)
     data = data.drop([
         data.columns[0],
-        data.columns[1],
         'region_1',
         'winery',
         'region_2',
