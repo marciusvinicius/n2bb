@@ -1,4 +1,4 @@
-from .db import db
+from sommelier.databases.db import db
 
 
 #TODO: Better way to filter, maybe using RestFilter

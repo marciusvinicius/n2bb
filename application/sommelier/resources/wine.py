@@ -5,25 +5,19 @@ from sommelier.databases.models import Wine, possible_filters
 
 
 class WinesApi(Resource):
-
     def get(self):
-        query_params = request.args
-        filters = {
-            k:v for k, v in query_params.items() 
-                if k in possible_filters
-        }
+        query = Wine.objects.filter(**request.environ['filters'])
+        query = query.order_by(*request.environ['sort'])
+        try:
+            wine_pagination = query.paginate(
+                **request.environ['page']
+            )
+        except:
+            return jsonify({
+                "message": "Page not found."
+            })
 
-        sort = query_params.get("sort", "").split(",") or "+price"
-        query = Wine.objects.filter(**filters)
-        query = query.order_by(*sort)
-
-        page = query_params.get('page') or 1
-        per_page = query_params.get('per_page') or 10
-        wine_pagination = query.paginate(
-            page=int(page),
-            per_page=int(per_page)
-        )
-    
+        #TODO: Move this for a middleware toon
         previous_page = wine_pagination.prev_num if wine_pagination.has_prev else None
         current_page = wine_pagination.page
         total_pages = wine_pagination.pages
