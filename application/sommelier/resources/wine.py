@@ -7,7 +7,9 @@ from sommelier.databases.models import Wine, possible_filters
 
 class WinesApi(Resource):
     def get(self):
-        query = Wine.objects.filter(**request.environ['filters'])
+        query = Wine.objects.filter(
+            **request.environ['filters']
+        ).hint(index="search_index")
         query = query.order_by(*request.environ['sort'])
         wine_pagination = query.paginate(
             **request.environ['page']

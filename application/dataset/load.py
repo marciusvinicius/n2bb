@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from pymongo import MongoClient
+from pymongo import MongoClient, TEXT
 
 client = MongoClient('mongodb://root:rootpassword@wine-db:27017/sommelier')
 database = client['sommelier']
@@ -30,3 +30,12 @@ def csv_to_json(filename, header=None):
 collection_wine.insert_many(
     csv_to_json('./dataset/wine-review.csv', 0)
 )
+
+collection_wine.create_index([
+    ('description', TEXT),
+    ('title', TEXT),
+    ('country', TEXT),
+    ('variety', TEXT),
+], name='search_index', default_language='english')
+
+
