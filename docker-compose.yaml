@@ -9,7 +9,7 @@ services:
         volumes:
             - ./application:/usr/src/app
         env_file:
-            - ./application/.env
+            - ./.env
         depends_on:
             - wine-db
     wine-db:

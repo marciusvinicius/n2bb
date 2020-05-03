@@ -5,6 +5,6 @@ gunicorn
 pytest
 pandas
 numpy
-environ
+flask-environ
 mongomock
 

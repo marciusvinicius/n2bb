@@ -1,4 +1,5 @@
 import json
+
 from flask import Response, request, jsonify
 from flask_restful import Resource
 from sommelier.databases.models import Wine, possible_filters
@@ -8,16 +9,9 @@ class WinesApi(Resource):
     def get(self):
         query = Wine.objects.filter(**request.environ['filters'])
         query = query.order_by(*request.environ['sort'])
-        try:
-            wine_pagination = query.paginate(
-                **request.environ['page']
-            )
-        except:
-            return jsonify({
-                "message": "Page not found."
-            })
-
-        #TODO: Move this for a middleware toon
+        wine_pagination = query.paginate(
+            **request.environ['page']
+        )
         previous_page = wine_pagination.prev_num if wine_pagination.has_prev else None
         current_page = wine_pagination.page
         total_pages = wine_pagination.pages
