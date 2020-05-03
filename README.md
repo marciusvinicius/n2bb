@@ -92,3 +92,25 @@ https://www.kaggle.com/zynicide/wine-reviews (arquivo winemag-data-130k-v2.csv)
     "total_pages": 3
 }
 ```
+
+### Filtros permitidos
+```
+    "price",
+    "price__gte",
+    "price__gt",
+    "price__lte",
+    "price__lt",
+    "points",
+    "points__lt",
+    "points__lte",
+    "points__gt",
+    "points__gte",
+    "title",
+    "title__contains",
+    "variety",
+    "variety__contains",
+    "description",
+    "description__contains",
+    "country",
+    "country__contains",
+```
